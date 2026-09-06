@@ -1,0 +1,93 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/**
+ * Design tokens — Appendix A.
+ * The app has one aesthetic: a late-night studio session inside a server room.
+ * Dark by default and always. `.dark` and `:root` share the same values so a
+ * future light-theme toggle in UiSlice never accidentally ships an untested palette.
+ */
+@layer base {
+  :root,
+  .dark {
+    /* zinc-950 */
+    --background: 240 10% 3.9%;
+    --foreground: 210 20% 98%;
+
+    /* zinc-900 */
+    --card: 240 5.9% 10%;
+    --card-foreground: 210 20% 98%;
+
+    /* zinc-900/60 (surface raised uses this + backdrop-blur via utility) */
+    --popover: 240 5.9% 10%;
+    --popover-foreground: 210 20% 98%;
+
+    --primary: 210 20% 98%;
+    --primary-foreground: 240 5.9% 10%;
+
+    --secondary: 240 3.7% 15.9%;
+    --secondary-foreground: 210 20% 98%;
+
+    --muted: 240 3.7% 15.9%;
+    --muted-foreground: 240 5% 64.9%;
+
+    --accent: 240 3.7% 15.9%;
+    --accent-foreground: 210 20% 98%;
+
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 20% 98%;
+
+    /* zinc-800/50 grid line */
+    --border: 240 3.7% 15.9%;
+    --input: 240 3.7% 15.9%;
+    --ring: 240 4.9% 83.9%;
+
+    --radius: 0.5rem;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+}
+
+/* Tabular numerals for BPM, syllable counts, bar numbers, and scores. */
+.tabular {
+  font-variant-numeric: tabular-nums;
+}
+
+/* Tray reject — CSS instead of Framer, which loops when `animate` is a new
+   object every render (especially under prefers-reduced-motion). */
+@keyframes tray-shake {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  25% {
+    transform: translateX(-3px);
+  }
+  75% {
+    transform: translateX(3px);
+  }
+}
+
+.tray-shake {
+  animation: tray-shake 120ms ease-out;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tray-shake {
+    animation: none;
+  }
+}
